@@ -39,7 +39,7 @@ def main():
         metrics = MetricsCalculator.calculate_suite_metrics(all_predictions)
         print("\nReward Model Calibration Summary:")
         for rm_v, m in metrics.items():
-            print(f"  {rm_v:22s}: Accuracy={m['accuracy']*100:.1f}%, ECE={m['expected_calibration_error']*100:.1f}%, Mean Margin (Δr)={m['mean_margin']:+.4f}")
+            print(f"  {rm_v:22s}: Accuracy={m['accuracy']*100:.1f}%, ECE={m['expected_calibration_error']*100:.1f}%, Mean Margin (Delta r)={m['mean_margin']:+.4f}")
 
         print(f"\nExporting results to: {args.output_dir}")
         ReportGenerator.export_results(all_predictions, args.output_dir)

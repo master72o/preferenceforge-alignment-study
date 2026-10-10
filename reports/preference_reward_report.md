@@ -13,9 +13,9 @@ This study evaluates reward model calibration and preference prediction accuracy
 
 | Reward Model Checkpoint | Pairwise Accuracy | Mean Reward Margin ($\Delta r$) | Expected Calibration Error (ECE) | Log Loss | Brier Score |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `RM_v1_Baseline` | 100.0% | +0.4200 | 39.9% | 0.5142 | 0.1631 |
-| `RM_v2_DPO_Calibrated` | 100.0% | +2.1000 | 11.3% | 0.1211 | 0.0140 |
-| `RM_v3_Margin_Scaled` | 100.0% | +4.6000 | 1.1% | 0.0114 | 0.0001 |
+| `RM_v1_Baseline` | 88.6% | +0.3929 | 38.7% | 0.5288 | 0.1701 |
+| `RM_v2_DPO_Calibrated` | 100.0% | +2.1114 | 12.4% | 0.1398 | 0.0241 |
+| `RM_v3_Margin_Scaled` | 100.0% | +4.4914 | 2.2% | 0.0230 | 0.0021 |
 
 ---
 
@@ -29,7 +29,7 @@ This study evaluates reward model calibration and preference prediction accuracy
 
 ## Recommendations for RLHF / DPO Engineering
 
-- **Enforce Reward Calibration (ECE $< 5\%$)**: Uncalibrated reward models produce overconfident rewards that degrade PPO policy stability.
+- **Enforce Reward Calibration (ECE $< 5%$ )**: Uncalibrated reward models produce overconfident rewards that degrade PPO policy stability.
 - **Utilize Bradley-Terry Sigmoid Probability**: Monitor $-\log \sigma(\Delta r)$ loss during preference tuning to prevent reward hacking.
 
 ---

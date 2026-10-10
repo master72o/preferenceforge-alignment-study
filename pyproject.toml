@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "preference-modeling-rlhf"
-version = "1.0.0"
-description = "Pairwise Preference Reward Model Calibration & Bradley-Terry Evaluation Framework for RLHF/DPO"
+name = "preferenceforge-alignment-study"
+version = "2.0.0"
+description = "PreferenceForge: Bradley-Terry Reward Model Calibration, DPO Pipeline, Length Bias Diagnostics, and Alignment Studio"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
@@ -16,6 +16,7 @@ dependencies = [
     "scipy>=1.9.0",
     "scikit-learn>=1.0.0",
     "pyyaml>=6.0",
+    "streamlit>=1.28.0",
 ]
 
 [project.optional-dependencies]
@@ -24,5 +25,9 @@ dev = [
     "pytest-cov>=4.0.0",
 ]
 
+[project.scripts]
+preferenceforge = "preferenceforge.cli:main"
+preference-reward = "preference_reward.cli:main"
+
 [tool.setuptools.packages.find]
-include = ["preference_reward*"]
+include = ["preference_reward*", "preferenceforge*"]

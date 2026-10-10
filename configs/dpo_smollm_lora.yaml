@@ -1,0 +1,37 @@
+# PreferenceForge DPO Training Configuration: SmolLM-135M-Instruct
+model_name_or_path: "HuggingFaceTB/SmolLM-135M-Instruct"
+dataset_path: "data/preference_dataset.jsonl"
+output_dir: "checkpoints/smollm_dpo_adapter"
+
+# Optimization Parameters
+learning_rate: 5.0e-5
+lr_scheduler_type: "cosine"
+warmup_ratio: 0.1
+weight_decay: 0.01
+optimizer: "adamw_torch"
+
+# DPO Hyperparameters
+beta: 0.1
+loss_type: "sigmoid"
+max_prompt_length: 512
+max_length: 1024
+
+# Batching & Compute
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+max_steps: 100
+fp16: true
+bf16: false
+
+# LoRA / PEFT Parameters
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - "q_proj"
+  - "k_proj"
+  - "v_proj"
+  - "o_proj"
+  - "gate_proj"
+  - "up_proj"
+  - "down_proj"
