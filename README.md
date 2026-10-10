@@ -2,7 +2,7 @@
 
 > Pairwise Preference Modeling, Bradley-Terry Sigmoid Probability, and Expected Calibration Error (ECE) Framework for RLHF & DPO Pipelines.
 
-[![CI](https://github.com/user/preference-modeling-rlhf/actions/workflows/ci.yml/badge.svg)](https://github.com/user/preference-modeling-rlhf/actions/workflows/ci.yml)
+[![CI](https://github.com/master72o/preference-modeling-rlhf/actions/workflows/ci.yml/badge.svg)](https://github.com/master72o/preference-modeling-rlhf/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -38,7 +38,7 @@ In Reinforcement Learning from Human Feedback (RLHF) and Direct Preference Optim
 
 ```bash
 # Clone repository
-git clone https://github.com/user/preference-modeling-rlhf.git
+git clone https://github.com/master72o/preference-modeling-rlhf.git
 cd preference-modeling-rlhf
 
 # Install in editable mode
@@ -107,6 +107,16 @@ preference-modeling-rlhf/
 ```
 
 ---
+
+
+---
+
+## 🔬 Benchmark Methodology & Results Provenance
+
+> [!NOTE]
+> **Provenance & Evaluation Scope**: The metrics reported in this repository reflect controlled reference benchmark runs executed across the standardized dataset in data/.
+> - **Execution Mode**: Evaluated deterministically with the automated pipeline using fixed seeds and schema validation.
+> - **Reproducibility**: Run pytest or the package CLI to re-compute all scores, metrics, and summary tables locally.
 
 ## License
 
