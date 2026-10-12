@@ -9,3 +9,6 @@ dist/
 results/*.json
 results/*.csv
 reports/figures/*.png
+
+# Auto-added standard ignores
+.venv
