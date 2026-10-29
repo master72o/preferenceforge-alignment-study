@@ -56,3 +56,42 @@ def test_beta_sweep():
     margins = [s["mean_margin"] for s in sweep]
     assert margins[1] == pytest.approx(margins[0] * 2, rel=1e-3)
     assert margins[2] == pytest.approx(margins[1] * 2, rel=1e-3)
+
+
+def test_ipo_loss_and_simpo_margin():
+    # For beta = 0.1, target log-ratio diff is 1 / (2 * 0.1) = 5.0
+    assert DPOEngine.compute_ipo_loss(5.0, beta=0.1) == pytest.approx(0.0, abs=1e-6)
+    assert DPOEngine.compute_ipo_loss(3.0, beta=0.1) == pytest.approx(4.0, abs=1e-6)
+
+    # SimPO length-normalized margin:
+    # pol_w = -10 over 10 tokens (-1.0/tok), pol_l = -30 over 15 tokens (-2.0/tok)
+    # beta * (-1.0 - (-2.0)) - gamma = 2.0 * 1.0 - 0.5 = 1.5
+    simpo_margin = DPOEngine.compute_simpo_margin(
+        pol_w=-10.0, pol_l=-30.0, len_w=10, len_l=15, beta=2.0, gamma=0.5
+    )
+    assert simpo_margin == pytest.approx(1.5, abs=1e-4)
+
+
+def test_audit_kl_drift_and_over_optimization():
+    normal_rec = PreferenceRecord(
+        pair_id="p_norm",
+        prompt="Normal prompt",
+        response_chosen="good",
+        response_rejected="bad",
+        policy_logps={"chosen": -10.0, "rejected": -18.0},
+        ref_logps={"chosen": -12.0, "rejected": -15.0},
+    )
+    drifted_rec = PreferenceRecord(
+        pair_id="p_drift",
+        prompt="Drifted prompt",
+        response_chosen="good",
+        response_rejected="bad",
+        policy_logps={"chosen": -5.0, "rejected": -45.0},
+        ref_logps={"chosen": -12.0, "rejected": -15.0},  # rejected drift = -30.0 (> 15.0 threshold)
+    )
+    audit = DPOEngine.audit_kl_drift([normal_rec, drifted_rec], beta=0.1, kl_threshold=15.0)
+    assert audit["total_samples"] == 2
+    assert audit["over_optimized_count"] == 1
+    assert audit["over_optimization_rate"] == 0.5
+    assert audit["outlier_ids"] == ["p_drift"]
+    assert audit["max_abs_kl_drift"] == 30.0
